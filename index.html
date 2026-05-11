@@ -1,0 +1,739 @@
+import React, { useState, useRef } from 'react';
+
+// 替换外部依赖为内联 SVG 图标
+const Home = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>;
+const Compass = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"/><polygon points="16.24 7.76 14.12 14.12 7.76 16.24 9.88 9.88 16.24 7.76"/></svg>;
+const PlusCircle = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="16"/><line x1="8" x2="16" y1="12" y2="12"/></svg>;
+const ImageIcon = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect width="18" height="18" x="3" y="3" rx="2" ry="2"/><circle cx="9" cy="9" r="2"/><path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"/></svg>;
+const User = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>;
+const MapPin = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>;
+const Calendar = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><rect width="18" height="18" x="3" y="4" rx="2" ry="2"/><line x1="16" x2="16" y1="2" y2="6"/><line x1="8" x2="8" y1="2" y2="6"/><line x1="3" x2="21" y1="10" y2="10"/></svg>;
+const Users = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>;
+const Heart = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z"/></svg>;
+const MessageCircle = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/></svg>;
+const Bell = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>;
+const ChevronRight = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m9 18 6-6-6-6"/></svg>;
+const ChevronLeft = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="m15 18-6-6 6-6"/></svg>;
+const Phone = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>;
+const MessageSquare = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>;
+const Search = (props) => <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...props}><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>;
+
+// 随机颜色生成和文字头像组件
+const getAvatarColor = (name) => {
+  const colors = ['bg-red-400', 'bg-blue-400', 'bg-green-400', 'bg-yellow-400', 'bg-purple-400', 'bg-pink-400', 'bg-indigo-400', 'bg-teal-400', 'bg-orange-400'];
+  let hash = 0;
+  for (let i = 0; i < name.length; i++) {
+    hash = name.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return colors[Math.abs(hash) % colors.length];
+};
+
+const Avatar = ({ name, className = "w-10 h-10 text-base" }) => {
+  const initial = name ? name.charAt(0).toUpperCase() : '?';
+  const bgColor = getAvatarColor(name || '');
+  return (
+    <div className={`flex items-center justify-center text-white font-bold shrink-0 rounded-xl ${bgColor} ${className}`}>
+      {initial}
+    </div>
+  );
+};
+
+// --- Mock Data ---
+const MOCK_ACTIVITIES = [
+  {
+    id: 1,
+    host: { name: '王大锤' },
+    title: '周末郊区露营 ⛺️',
+    type: '旅游',
+    color: 'bg-green-600',
+    time: '本周六 10:00',
+    location: '延庆百里山水画廊',
+    joined: 5,
+    max: 8,
+    status: 'open',
+    images: ['https://images.unsplash.com/photo-1504280390467-33923c6d7ee8?auto=format&fit=crop&w=800&q=80'],
+    fallbackBg: 'bg-gradient-to-br from-green-500 to-emerald-800'
+  },
+  {
+    id: 2,
+    host: { name: 'Kevin' },
+    title: '硬核剧本杀《年轮》',
+    type: '娱乐',
+    color: 'bg-purple-500',
+    time: '明天 14:00',
+    location: '朝阳大悦城 谜之密室',
+    joined: 4,
+    max: 6,
+    status: 'hot',
+    images: [], 
+    fallbackBg: 'bg-gradient-to-br from-gray-800 to-purple-900'
+  },
+  {
+    id: 3,
+    host: { name: '陈大拿' },
+    title: '新开的黑珍珠日料探店 🍣',
+    type: '约饭',
+    color: 'bg-orange-500',
+    time: '周五 19:00',
+    location: '朝阳区三里屯',
+    joined: 2,
+    max: 2,
+    status: 'full',
+    images: ['https://images.unsplash.com/photo-1579871494447-9811cf80d66c?auto=format&fit=crop&w=800&q=80'],
+    fallbackBg: 'bg-gradient-to-br from-orange-400 to-red-600'
+  },
+  {
+    id: 4,
+    host: { name: '李阿姨' },
+    title: '周五下班 KTV 局 🎤',
+    type: '派对',
+    color: 'bg-pink-500',
+    time: '周五 20:30',
+    location: '纯K (工体店)',
+    joined: 6,
+    max: 12,
+    status: 'open',
+    images: [], 
+    fallbackBg: 'bg-gradient-to-br from-pink-500 via-purple-500 to-indigo-600'
+  },
+  {
+    id: 5,
+    host: { name: 'Sarah' },
+    title: '798 尤伦斯看展 🎨',
+    type: '看展',
+    color: 'bg-blue-400',
+    time: '周日 14:00',
+    location: '798艺术区 UCCA',
+    joined: 2,
+    max: 4,
+    status: 'open',
+    images: ['https://images.unsplash.com/photo-1531058020387-3be344556be6?auto=format&fit=crop&w=800&q=80'],
+    fallbackBg: 'bg-gradient-to-br from-blue-400 to-indigo-600'
+  },
+  {
+    id: 6,
+    host: { name: '林一' },
+    title: '周末崇礼滑雪 🏂',
+    type: '滑雪',
+    color: 'bg-blue-500',
+    time: '下周六 08:00',
+    location: '张家口崇礼万龙雪场',
+    joined: 3,
+    max: 4,
+    status: 'hot',
+    images: ['https://images.unsplash.com/photo-1551524559-8af4e6624178?auto=format&fit=crop&w=800&q=80'],
+    fallbackBg: 'bg-gradient-to-br from-blue-300 to-blue-800'
+  },
+  {
+    id: 7,
+    host: { name: '赵铁柱' },
+    title: '五棵松篮球养生局 🏀',
+    type: '运动',
+    color: 'bg-orange-600',
+    time: '今晚 19:30',
+    location: '五棵松华熙LIVE HI-PARK',
+    joined: 8,
+    max: 10,
+    status: 'hot',
+    images: [], 
+    fallbackBg: 'bg-gradient-to-br from-orange-400 to-amber-700'
+  }
+];
+
+const MOCK_MOMENTS = [
+  {
+    id: 1,
+    user: { name: '王大锤' },
+    time: '15分钟前',
+    content: '新买的帐篷到了！周末露营有一起的吗？感觉天气特别棒。',
+    images: [
+      'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&w=400&q=80'
+    ],
+    likes: 15,
+    comments: 4,
+    activityRef: '周末郊区露营 ⛺️'
+  },
+  {
+    id: 2,
+    user: { name: '张伟' },
+    time: '2小时前',
+    content: '周末的飞盘局太开心了！大家体力都超好，下次继续约起！🥏🐶',
+    images: [
+      'https://images.unsplash.com/photo-1563299796-17596ed6b058?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1551698618-1dfe5d97d256?auto=format&fit=crop&w=400&q=80'
+    ],
+    likes: 42,
+    comments: 9,
+    activityRef: '奥森飞盘局'
+  },
+  {
+    id: 3,
+    user: { name: 'Kevin' },
+    time: '5小时前',
+    content: '最近加班太多了，好想找个地方放空一下自己... 🥲 有没有什么好吃的店推荐？',
+    images: [],
+    likes: 12,
+    comments: 18,
+    activityRef: null
+  },
+  {
+    id: 4,
+    user: { name: 'Sarah' },
+    time: '昨天 18:30',
+    content: '打卡了这家很火的咖啡店，拿铁不错，重点是拍照很出片☕️✨，顺便读完了这本拖了很久的书。',
+    images: [
+      'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&w=400&q=80'
+    ],
+    likes: 88, 
+    comments: 6,
+    activityRef: '周末下午茶'
+  },
+  {
+    id: 5,
+    user: { name: '林一' },
+    time: '昨天 21:00',
+    content: '深夜放毒，这家精酿烧烤太绝了！减肥计划下周再说吧 🍻🍢',
+    images: [
+      'https://images.unsplash.com/photo-1603360946369-dc9bb6258143?auto=format&fit=crop&w=400&q=80'
+    ],
+    likes: 34,
+    comments: 22, 
+    activityRef: null
+  },
+  {
+    id: 6,
+    user: { name: '李阿姨' },
+    time: '2天前',
+    content: '周末草莓音乐节现场，气氛太燃了！！！就算下雨也挡不住大家的热情 🎸🌧️',
+    images: [
+      'https://images.unsplash.com/photo-1459749411175-04bf5292ceea?auto=format&fit=crop&w=400&q=80',
+      'https://images.unsplash.com/photo-1540039155732-d6820531cc2a?auto=format&fit=crop&w=400&q=80'
+    ],
+    likes: 125, 
+    comments: 14,
+    activityRef: '音乐节派对'
+  },
+  {
+    id: 7,
+    user: { name: '赵铁柱' },
+    time: '3天前',
+    content: '十公里打卡，暴汗的感觉真爽！又是自律的一天 🏃‍♂️💦',
+    images: [
+      'https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=400&q=80'
+    ],
+    likes: 56,
+    comments: 5,
+    activityRef: '夜跑打卡'
+  },
+  {
+    id: 8,
+    user: { name: '陈大拿' },
+    time: '3天前',
+    content: '周末在家就是用来撸猫的，根本不想出门... 🐱💤',
+    images: [
+      'https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?auto=format&fit=crop&w=400&q=80'
+    ],
+    likes: 72, 
+    comments: 11,
+    activityRef: null
+  }
+];
+
+const MOCK_CONTACTS = [
+  { id: 1, name: '林一', phone: '13800138000', bio: '滑雪发烧友 🏂，常驻崇礼' },
+  { id: 2, name: '陈大拿', phone: '13900139000', bio: '干饭人，干饭魂，全城探店中' },
+  { id: 3, name: 'Sarah', phone: '13700137000', bio: 'Life is a marathon 🏃‍♀️，热爱美术馆' },
+  { id: 4, name: '张伟', phone: '13600136000', bio: '周末只玩飞盘，接盘侠' },
+  { id: 5, name: '王大锤', phone: '13500135000', bio: '密室逃脱重度爱好者，兼职户外向导' },
+  { id: 6, name: 'Kevin', phone: '13300133000', bio: '大厂打工人，剧本杀推理机' },
+  { id: 7, name: '赵铁柱', phone: '13200132000', bio: '无兄弟不篮球，科比死忠粉' },
+  { id: 8, name: '李阿姨', phone: '13400134000', bio: 'K歌之王，麻将搭子，随叫随到' },
+];
+
+export default function App() {
+  const [activeTab, setActiveTab] = useState('profile'); // 默认显示“我的”页面，方便你直接体验设置功能
+  const [filter, setFilter] = useState('全部');
+  const filters = ['全部', '滑雪', '约饭', '运动', '旅游', '看展', '娱乐', '派对'];
+  
+  // 新增：二级页面状态控制
+  const [subPage, setSubPage] = useState(null);
+
+  // 拖拽滑动状态支持 (针对首页卡片)
+  const scrollRef = useRef(null);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
+
+  const handleMouseDown = (e) => {
+    setIsDragging(true);
+    setStartX(e.pageX - scrollRef.current.offsetLeft);
+    setScrollLeft(scrollRef.current.scrollLeft);
+  };
+
+  const handleMouseLeave = () => setIsDragging(false);
+  const handleMouseUp = () => setIsDragging(false);
+
+  const handleMouseMove = (e) => {
+    if (!isDragging) return;
+    e.preventDefault();
+    const x = e.pageX - scrollRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5;
+    if (scrollRef.current) {
+      scrollRef.current.scrollLeft = scrollLeft - walk;
+    }
+  };
+
+  return (
+    <div className="flex justify-center items-center min-h-screen bg-gray-100 font-sans">
+      {/* 模拟 iPhone 容器 */}
+      <div className="w-full max-w-[400px] h-[850px] bg-gray-50 rounded-[40px] shadow-2xl overflow-hidden relative flex flex-col border-[8px] border-black">
+        
+        {/* iOS 状态栏占位：提高 z-index 确保永远在最上层 */}
+        <div className="h-12 w-full flex justify-between items-end px-6 pb-2 text-xs font-semibold z-[60] bg-white/80 backdrop-blur-md absolute top-0 pointer-events-none">
+          <span>9:41</span>
+          <div className="flex space-x-1 items-center">
+            <div className="w-4 h-3 bg-black rounded-sm relative"><div className="w-1 h-3 bg-white absolute right-0"></div></div>
+            <div className="w-4 h-3 bg-black rounded-sm flex items-end space-x-[1px] p-[1px]">
+                <div className="w-[3px] h-1 bg-white"></div><div className="w-[3px] h-1.5 bg-white"></div><div className="w-[3px] h-2 bg-white"></div><div className="w-[3px] h-2.5 bg-white"></div>
+            </div>
+          </div>
+        </div>
+
+        {/* --- 主内容区域 (仅在没有二级页面时显示主要元素，或者让二级页面直接盖在上面) --- */}
+        <div className="flex-1 flex flex-col overflow-y-auto pt-14 pb-24 hide-scrollbar">
+          
+          {/* 1. 约局 (Activities) Tab */}
+          {activeTab === 'activities' && (
+            <div className="animate-in fade-in duration-300 flex-1 flex flex-col">
+              <div className="px-5 pt-2 pb-2 bg-transparent flex justify-between items-center z-10">
+                <div>
+                  <h1 className="text-2xl font-bold text-gray-900">发现聚会</h1>
+                  <p className="text-sm text-gray-500">本周末有 12 个朋友在攒局</p>
+                </div>
+                <div className="relative">
+                  <Bell className="w-6 h-6 text-gray-800" />
+                  <span className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 border-2 border-white rounded-full"></span>
+                </div>
+              </div>
+
+              <div className="flex overflow-x-auto px-5 py-3 space-x-3 hide-scrollbar shrink-0">
+                {filters.map(f => (
+                  <button 
+                    key={f}
+                    onClick={() => setFilter(f)}
+                    className={`whitespace-nowrap px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
+                      filter === f ? 'bg-indigo-600 text-white shadow-md' : 'bg-white text-gray-600 border border-gray-200'
+                    }`}
+                  >
+                    {f}
+                  </button>
+                ))}
+              </div>
+
+              <div 
+                ref={scrollRef}
+                onMouseDown={handleMouseDown}
+                onMouseLeave={handleMouseLeave}
+                onMouseUp={handleMouseUp}
+                onMouseMove={handleMouseMove}
+                className={`flex-1 w-full flex overflow-x-auto hide-scrollbar px-5 py-4 space-x-4 items-center ${!isDragging ? 'snap-x snap-mandatory' : 'cursor-grabbing'}`}
+              >
+                {MOCK_ACTIVITIES.map((activity) => (
+                  <div 
+                    key={activity.id} 
+                    className={`snap-center shrink-0 w-[310px] h-[520px] relative rounded-[32px] overflow-hidden shadow-[0_15px_30px_-5px_rgba(0,0,0,0.2)] group select-none ${activity.images && activity.images.length > 0 ? 'bg-gray-900' : ''}`}
+                  >
+                    {activity.images && activity.images.length > 0 ? (
+                      <img 
+                        src={activity.images[0]} 
+                        draggable={false}
+                        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 pointer-events-none" 
+                        alt="activity bg" 
+                      />
+                    ) : (
+                      <div className={`absolute inset-0 w-full h-full transition-transform duration-700 group-hover:scale-105 ${activity.fallbackBg}`}></div>
+                    )}
+                    
+                    <div className="absolute inset-0 bg-gradient-to-b from-black/30 via-transparent to-black/80"></div>
+
+                    <div className="absolute top-5 left-5 right-5 flex justify-between items-start">
+                      <div className="bg-black/20 backdrop-blur-md rounded-2xl pr-4 pl-1 py-1 flex items-center border border-white/20">
+                        <Avatar name={activity.host.name} className="w-8 h-8 text-sm" />
+                        <div className="ml-2 flex flex-col justify-center">
+                          <span className="text-white text-[11px] opacity-80 leading-tight">发起人</span>
+                          <span className="text-white text-xs font-bold leading-tight">{activity.host.name}</span>
+                        </div>
+                      </div>
+                      <span className={`px-3 py-1.5 rounded-full text-xs font-bold text-white shadow-sm border border-white/20 backdrop-blur-md ${activity.color} bg-opacity-80`}>
+                        {activity.type}
+                      </span>
+                    </div>
+
+                    <div className="absolute bottom-0 w-full p-6 text-white">
+                      <h2 className="text-3xl font-extrabold mb-3 leading-tight drop-shadow-md">{activity.title}</h2>
+                      <div className="space-y-2 mb-6">
+                        <div className="flex items-center text-gray-200 text-sm drop-shadow-sm">
+                          <Calendar className="w-4 h-4 mr-2 opacity-80" /> 
+                          {activity.time}
+                        </div>
+                        <div className="flex items-center text-gray-200 text-sm drop-shadow-sm">
+                          <MapPin className="w-4 h-4 mr-2 opacity-80" /> 
+                          {activity.location}
+                        </div>
+                      </div>
+
+                      <div className="flex justify-between items-end pt-5 border-t border-white/20">
+                        <div>
+                          <p className="text-[10px] text-gray-300 mb-1.5 uppercase tracking-wider">已加入 ({activity.joined}/{activity.max})</p>
+                          <div className="flex -space-x-2">
+                            {[...Array(Math.min(activity.joined, 3))].map((_, i) => (
+                              <div key={i} className="w-7 h-7 rounded-lg bg-gray-400 border border-white/40 relative overflow-hidden shadow-sm">
+                                <Avatar name={`U${i}`} className="w-full h-full text-[10px] bg-white/20 backdrop-blur-sm !rounded-none" />
+                              </div>
+                            ))}
+                            {activity.joined > 3 && (
+                              <div className="w-7 h-7 rounded-lg bg-black/40 border border-white/40 flex items-center justify-center shadow-sm backdrop-blur-md z-10">
+                                <span className="text-white/80 text-[10px] font-bold">+{activity.joined - 3}</span>
+                              </div>
+                            )}
+                          </div>
+                        </div>
+                        <button 
+                          className={`px-6 py-3 rounded-2xl text-sm font-bold backdrop-blur-md transition-transform active:scale-95 flex items-center shadow-lg ${
+                            activity.status === 'full' 
+                              ? 'bg-white/20 text-white/50 cursor-not-allowed border border-white/10' 
+                              : 'bg-white text-black hover:bg-gray-100 border border-transparent'
+                          }`}
+                        >
+                          {activity.status === 'full' ? '已满员' : '我要去'}
+                          {activity.status !== 'full' && <ChevronRight className="w-4 h-4 ml-1" />}
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+                <div className="w-[10px] h-10 shrink-0"></div>
+              </div>
+            </div>
+          )}
+
+          {/* 2. 通讯录 (Contacts) Tab */}
+          {activeTab === 'contacts' && (
+            <div className="animate-in fade-in duration-300">
+              <div className="px-5 pt-2 pb-4 bg-white sticky top-0 z-10 shadow-sm">
+                <div className="flex justify-between items-center mb-4">
+                  <h1 className="text-2xl font-bold text-gray-900">我的朋友</h1>
+                  <span className="text-indigo-600 font-medium text-sm bg-indigo-50 px-3 py-1 rounded-full">{MOCK_CONTACTS.length} 人</span>
+                </div>
+                <div className="relative">
+                  <Search className="w-5 h-5 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <input 
+                    type="text" 
+                    placeholder="搜索朋友名字..." 
+                    className="w-full bg-gray-100 rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/50 transition-all"
+                  />
+                </div>
+              </div>
+
+              <div className="px-5 py-4 space-y-3">
+                {MOCK_CONTACTS.map((contact) => (
+                  <div key={contact.id} className="flex items-center justify-between bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                    <div className="flex items-center space-x-3 overflow-hidden">
+                      <Avatar name={contact.name} className="w-12 h-12 text-lg" />
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-bold text-gray-900 text-sm truncate">{contact.name}</h3>
+                        <p className="text-xs text-gray-500 mt-0.5 truncate">{contact.bio}</p>
+                      </div>
+                    </div>
+                    
+                    <div className="flex space-x-2 shrink-0 ml-3">
+                      <a 
+                        href={`sms:${contact.phone}`} 
+                        className="w-10 h-10 rounded-full bg-indigo-50 text-indigo-500 flex items-center justify-center transition-colors hover:bg-indigo-100 active:scale-95"
+                        title="发短信"
+                      >
+                        <MessageSquare className="w-4 h-4" />
+                      </a>
+                      <a 
+                        href={`tel:${contact.phone}`} 
+                        className="w-10 h-10 rounded-full bg-green-50 text-green-500 flex items-center justify-center transition-colors hover:bg-green-100 active:scale-95"
+                        title="打电话"
+                      >
+                        <Phone className="w-4 h-4" />
+                      </a>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 3. 朋友圈/动态 (Moments) Tab */}
+          {activeTab === 'moments' && (
+            <div className="animate-in fade-in duration-300">
+              <div className="px-5 py-4 bg-white sticky top-0 z-10 shadow-sm flex justify-between items-center">
+                <h1 className="text-2xl font-bold text-gray-900">朋友动态</h1>
+                <ImageIcon className="w-6 h-6 text-gray-800" />
+              </div>
+              
+              <div className="space-y-2">
+                {MOCK_MOMENTS.map((moment) => (
+                  <div key={moment.id} className="bg-white p-5">
+                    <div className="flex space-x-3">
+                      <Avatar name={moment.user.name} className="w-10 h-10" />
+                      <div className="flex-1">
+                        <div className="flex justify-between items-baseline">
+                          <h3 className="font-bold text-gray-900 text-sm">{moment.user.name}</h3>
+                        </div>
+                        <p className="text-gray-800 text-sm mt-1 leading-relaxed">{moment.content}</p>
+                        
+                        {moment.images && moment.images.length > 0 && (
+                          <div className={`grid gap-2 mt-3 ${moment.images.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+                            {moment.images.map((img, i) => (
+                              <img key={i} src={img} className="w-full h-32 object-cover rounded-xl border border-gray-100" alt="moment" />
+                            ))}
+                          </div>
+                        )}
+
+                        {moment.activityRef && (
+                          <div className="mt-3 bg-indigo-50 px-3 py-1.5 rounded-lg inline-flex items-center text-xs text-indigo-600 font-medium">
+                            <Compass className="w-3 h-3 mr-1" />
+                            参与了：{moment.activityRef}
+                          </div>
+                        )}
+
+                        <div className="flex justify-between items-center mt-4 text-gray-400">
+                          <span className="text-xs">{moment.time}</span>
+                          <div className="flex space-x-4">
+                            <button className="flex items-center space-x-1 hover:text-red-500 transition-colors">
+                              <Heart className="w-4 h-4" />
+                              <span className="text-xs">{moment.likes}</span>
+                            </button>
+                            <button className="flex items-center space-x-1">
+                              <MessageCircle className="w-4 h-4" />
+                              <span className="text-xs">{moment.comments}</span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* 4. 我的 (Profile) Tab */}
+          {activeTab === 'profile' && (
+            <div className="animate-in fade-in duration-300">
+              <div className="bg-indigo-600 text-white px-5 pt-8 pb-12 rounded-b-[40px]">
+                <div className="flex justify-between items-center mb-6">
+                  <h1 className="text-xl font-bold">我的主页</h1>
+                  <Bell className="w-6 h-6" />
+                </div>
+                <div className="flex items-center space-x-4">
+                  <Avatar name="Jason" className="w-20 h-20 rounded-2xl border-4 border-indigo-400 text-3xl" />
+                  <div>
+                    <h2 className="text-2xl font-bold">Jason</h2>
+                    <p className="text-indigo-200 text-sm mt-1">社交达人 · 已参与 24 场聚会</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="px-5 -mt-6">
+                <div className="bg-white rounded-2xl shadow-sm p-4 flex justify-around mb-6 relative z-10">
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-gray-900">12</div>
+                    <div className="text-xs text-gray-500 mt-1">发起的局</div>
+                  </div>
+                  <div className="w-px bg-gray-200"></div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-gray-900">24</div>
+                    <div className="text-xs text-gray-500 mt-1">参与的局</div>
+                  </div>
+                  <div className="w-px bg-gray-200"></div>
+                  <div className="text-center">
+                    <div className="text-2xl font-bold text-gray-900">86</div>
+                    <div className="text-xs text-gray-500 mt-1">我的朋友</div>
+                  </div>
+                </div>
+
+                <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
+                  <div className="p-4 border-b border-gray-100 flex justify-between items-center active:bg-gray-50 transition-colors cursor-pointer">
+                    <span className="font-semibold text-gray-900">即将开始的行程</span>
+                    <ChevronRight className="w-5 h-5 text-gray-400" />
+                  </div>
+                  <div className="p-4 border-b border-gray-100 flex justify-between items-center active:bg-gray-50 transition-colors cursor-pointer">
+                    <span className="font-semibold text-gray-900">我看过的聚会</span>
+                    <ChevronRight className="w-5 h-5 text-gray-400" />
+                  </div>
+                  {/* 点击该行触发二级页面跳转 */}
+                  <div 
+                    onClick={() => setSubPage('settings')}
+                    className="p-4 flex justify-between items-center active:bg-gray-50 transition-colors cursor-pointer"
+                  >
+                    <span className="font-semibold text-gray-900">设置与隐私</span>
+                    <ChevronRight className="w-5 h-5 text-gray-400" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          )}
+
+        </div>
+
+        {/* --- 底部导航栏 --- */}
+        <div className="absolute bottom-0 w-full bg-white border-t border-gray-100 px-4 pt-3 pb-8 flex justify-between items-center shadow-[0_-10px_20px_rgba(0,0,0,0.03)] rounded-b-[32px]">
+          <button 
+            onClick={() => setActiveTab('activities')}
+            className={`flex flex-col items-center space-y-1 w-[20%] transition-colors ${activeTab === 'activities' ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
+          >
+            <Compass className="w-6 h-6" />
+            <span className="text-[10px] font-medium mt-1">约局</span>
+          </button>
+
+          <button 
+            onClick={() => setActiveTab('moments')}
+            className={`flex flex-col items-center space-y-1 w-[20%] transition-colors ${activeTab === 'moments' ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
+          >
+            <ImageIcon className="w-6 h-6" />
+            <span className="text-[10px] font-medium mt-1">动态</span>
+          </button>
+
+          <div className="w-[20%] flex justify-center">
+            <button className="bg-indigo-600 hover:bg-indigo-700 text-white w-14 h-14 rounded-full flex items-center justify-center -mt-8 shadow-lg shadow-indigo-200 transform transition-transform active:scale-95 border-4 border-white shrink-0">
+              <PlusCircle className="w-7 h-7" />
+            </button>
+          </div>
+
+          <button 
+            onClick={() => setActiveTab('contacts')}
+            className={`flex flex-col items-center space-y-1 w-[20%] transition-colors ${activeTab === 'contacts' ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
+          >
+            <Users className="w-6 h-6" />
+            <span className="text-[10px] font-medium mt-1">朋友</span>
+          </button>
+
+          <button 
+            onClick={() => setActiveTab('profile')}
+            className={`flex flex-col items-center space-y-1 w-[20%] transition-colors ${activeTab === 'profile' ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
+          >
+            <User className="w-6 h-6" />
+            <span className="text-[10px] font-medium mt-1">我的</span>
+          </button>
+        </div>
+
+
+        {/* =======================================================================
+            二级页面：设置与隐私 (Settings Overlay)
+            ======================================================================= */}
+        {subPage === 'settings' && (
+          <div className="absolute inset-0 bg-gray-50 z-50 flex flex-col slide-in-right overflow-hidden rounded-[32px]">
+            {/* 导航头 (给顶部状态栏预留了 48px padding) */}
+            <div className="pt-12 pb-3 px-2 bg-white flex items-center shadow-sm relative shrink-0">
+              <button 
+                onClick={() => setSubPage(null)} 
+                className="absolute left-2 p-2 flex items-center text-indigo-600 active:opacity-60 transition-opacity"
+              >
+                <ChevronLeft className="w-6 h-6" />
+                <span className="text-[16px] font-medium -ml-1">返回</span>
+              </button>
+              <h1 className="flex-1 text-center text-[17px] font-bold text-gray-900">设置与隐私</h1>
+            </div>
+
+            {/* 设置项列表 */}
+            <div className="flex-1 overflow-y-auto pb-12 hide-scrollbar">
+              
+              {/* 分组 1 */}
+              <div className="bg-white mx-4 mt-5 rounded-2xl shadow-sm overflow-hidden">
+                <div className="p-4 border-b border-gray-50 flex justify-between items-center active:bg-gray-50 transition-colors cursor-pointer">
+                  <span className="text-[15px] text-gray-900">账号与安全</span>
+                  <div className="flex items-center text-gray-400">
+                    <span className="text-xs mr-1">已保护</span>
+                    <ChevronRight className="w-5 h-5" />
+                  </div>
+                </div>
+                <div className="p-4 flex justify-between items-center active:bg-gray-50 transition-colors cursor-pointer">
+                  <span className="text-[15px] text-gray-900">青少年模式</span>
+                  <div className="flex items-center text-gray-400">
+                    <span className="text-xs mr-1">未开启</span>
+                    <ChevronRight className="w-5 h-5" />
+                  </div>
+                </div>
+              </div>
+
+              {/* 分组 2 (纯开关设置) */}
+              <div className="bg-white mx-4 mt-5 rounded-2xl shadow-sm overflow-hidden">
+                <div className="p-4 border-b border-gray-50 flex justify-between items-center active:bg-gray-50 transition-colors cursor-pointer">
+                  <span className="text-[15px] text-gray-900">新消息通知</span>
+                  <ChevronRight className="w-5 h-5 text-gray-300" />
+                </div>
+                <div className="p-4 border-b border-gray-50 flex justify-between items-center active:bg-gray-50 transition-colors cursor-pointer">
+                  <span className="text-[15px] text-gray-900">黑名单与权限</span>
+                  <ChevronRight className="w-5 h-5 text-gray-300" />
+                </div>
+                <div className="p-4 flex justify-between items-center">
+                  <span className="text-[15px] text-gray-900">隐身模式 (不被推荐给朋友)</span>
+                  {/* iOS 风格 Switch 开关 */}
+                  <div className="w-12 h-[26px] bg-indigo-500 rounded-full relative cursor-pointer shadow-inner">
+                    <div className="absolute right-[2px] top-[2px] w-[22px] h-[22px] bg-white rounded-full shadow-sm"></div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 分组 3 */}
+              <div className="bg-white mx-4 mt-5 rounded-2xl shadow-sm overflow-hidden">
+                <div className="p-4 border-b border-gray-50 flex justify-between items-center active:bg-gray-50 transition-colors cursor-pointer">
+                  <span className="text-[15px] text-gray-900">清除缓存</span>
+                  <span className="text-[14px] text-gray-400 font-mono">128 MB</span>
+                </div>
+                <div className="p-4 flex justify-between items-center active:bg-gray-50 transition-colors cursor-pointer">
+                  <span className="text-[15px] text-gray-900">关于约局</span>
+                  <div className="flex items-center text-gray-400">
+                    <span className="text-[13px] mr-1 font-mono">v1.0.2</span>
+                    <ChevronRight className="w-5 h-5" />
+                  </div>
+                </div>
+              </div>
+
+              {/* 退出按钮 */}
+              <div className="mx-4 mt-8">
+                <button className="w-full bg-white text-red-500 font-bold py-3.5 rounded-2xl shadow-sm active:bg-red-50 transition-colors text-[16px]">
+                  退出登录
+                </button>
+              </div>
+
+              <p className="text-center text-gray-400 text-xs mt-6 mb-8 font-medium tracking-wide">约局 © 2026</p>
+            </div>
+          </div>
+        )}
+
+        {/* iOS 底部 Home Bar (保持始终在最上层) */}
+        <div className="absolute bottom-2 w-full flex justify-center z-[70] pointer-events-none">
+          <div className="w-1/3 h-1 bg-gray-900 rounded-full opacity-80"></div>
+        </div>
+
+      </div>
+
+      <style>{`
+        .hide-scrollbar::-webkit-scrollbar {
+          display: none;
+        }
+        .hide-scrollbar {
+          -ms-overflow-style: none;
+          scrollbar-width: none;
+        }
+
+        /* 页面从右侧滑入的动画定义 */
+        @keyframes slideInRight {
+          from { transform: translateX(100%); }
+          to { transform: translateX(0); }
+        }
+        .slide-in-right {
+          animation: slideInRight 0.3s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+      `}</style>
+    </div>
+  );
+}
