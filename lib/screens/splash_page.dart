@@ -5,7 +5,7 @@ import 'package:yueplayer/navigation/entry_navigation.dart';
 import 'package:yueplayer/services/app_storage.dart';
 import 'package:yueplayer/theme/app_colors.dart';
 
-/// 应用启动页：主色渐变、品牌文案，与产品「觅伴」视觉一致。
+/// 应用启动页：主色渐变、品牌文案，与产品「久遇」视觉一致。
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
 
@@ -132,7 +132,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
                         ),
                         const SizedBox(height: 28),
                         Text(
-                          '觅伴',
+                          '久遇',
                           style: TextStyle(
                             fontSize: 36,
                             fontWeight: FontWeight.w900,
@@ -194,7 +194,7 @@ class _SplashPageState extends State<SplashPage> with SingleTickerProviderStateM
   }
 }
 
-/// 背景轻装饰，与觅伴卡片的柔和气质呼应。
+/// 背景轻装饰，与久遇卡片的柔和气质呼应。
 class _SoftOrbitPainter extends CustomPainter {
   _SoftOrbitPainter({required this.color});
 

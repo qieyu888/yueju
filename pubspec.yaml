@@ -1,8 +1,8 @@
 name: yueplayer
-description: "觅伴 — 场景化线下聚会与轻社交"
+description: "久遇 — 场景化线下聚会与轻社交"
 publish_to: 'none'
 
-version: 1.0.1+2
+version: 1.0.1+3
 
 environment:
   sdk: ^3.10.4

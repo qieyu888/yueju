@@ -90,7 +90,7 @@ class _AgreementGatePageState extends State<AgreementGatePage> {
                 ),
                 const SizedBox(height: 24),
                 const Text(
-                  '欢迎使用觅伴',
+                  '欢迎使用久遇',
                   textAlign: TextAlign.center,
                   style: TextStyle(fontSize: 26, fontWeight: FontWeight.w900, color: AppColors.textPrimary),
                 ),

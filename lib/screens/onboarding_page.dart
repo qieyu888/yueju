@@ -205,7 +205,7 @@ class _OnboardingPageState extends State<OnboardingPage> {
                           elevation: 0,
                         ),
                         child: Text(
-                          _isLast ? '进入觅伴' : '下一步',
+                          _isLast ? '进入久遇' : '下一步',
                           style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w800),
                         ),
                       ),

@@ -303,7 +303,7 @@ export default function App() {
         {/* --- 主内容区域 (仅在没有二级页面时显示主要元素，或者让二级页面直接盖在上面) --- */}
         <div className="flex-1 flex flex-col overflow-y-auto pt-14 pb-24 hide-scrollbar">
           
-          {/* 1. 觅伴 (Activities) Tab */}
+          {/* 1. 久遇 (Activities) Tab */}
           {activeTab === 'activities' && (
             <div className="animate-in fade-in duration-300 flex-1 flex flex-col">
               <div className="px-5 pt-2 pb-2 bg-transparent flex justify-between items-center z-10">
@@ -590,7 +590,7 @@ export default function App() {
             className={`flex flex-col items-center space-y-1 w-[20%] transition-colors ${activeTab === 'activities' ? 'text-indigo-600' : 'text-gray-400 hover:text-gray-600'}`}
           >
             <Compass className="w-6 h-6" />
-            <span className="text-[10px] font-medium mt-1">觅伴</span>
+            <span className="text-[10px] font-medium mt-1">久遇</span>
           </button>
 
           <button 
@@ -689,7 +689,7 @@ export default function App() {
                   <span className="text-[14px] text-gray-400 font-mono">128 MB</span>
                 </div>
                 <div className="p-4 flex justify-between items-center active:bg-gray-50 transition-colors cursor-pointer">
-                  <span className="text-[15px] text-gray-900">关于觅伴</span>
+                  <span className="text-[15px] text-gray-900">关于久遇</span>
                   <div className="flex items-center text-gray-400">
                     <span className="text-[13px] mr-1 font-mono">v1.0.2</span>
                     <ChevronRight className="w-5 h-5" />
@@ -704,7 +704,7 @@ export default function App() {
                 </button>
               </div>
 
-              <p className="text-center text-gray-400 text-xs mt-6 mb-8 font-medium tracking-wide">觅伴 © 2026</p>
+              <p className="text-center text-gray-400 text-xs mt-6 mb-8 font-medium tracking-wide">久遇 © 2026</p>
             </div>
           </div>
         )}

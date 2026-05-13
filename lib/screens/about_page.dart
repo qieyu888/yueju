@@ -40,7 +40,7 @@ class _AboutPageState extends State<AboutPage> {
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
-        title: const Text('关于觅伴', style: TextStyle(fontWeight: FontWeight.w800)),
+        title: const Text('关于久遇', style: TextStyle(fontWeight: FontWeight.w800)),
         backgroundColor: Colors.white,
         foregroundColor: AppColors.textPrimary,
         elevation: 0,
@@ -63,7 +63,7 @@ class _AboutPageState extends State<AboutPage> {
           const SizedBox(height: 16),
           const Center(
             child: Text(
-              '觅伴',
+              '久遇',
               style: TextStyle(fontSize: 22, fontWeight: FontWeight.w900, color: AppColors.textPrimary),
             ),
           ),

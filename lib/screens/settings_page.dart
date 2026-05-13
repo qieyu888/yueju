@@ -229,7 +229,7 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     const Divider(height: 1),
                     _tile(
-                      '关于觅伴',
+                      '关于久遇',
                       trailing: _chevronTrail('1.0.0'),
                       onTap: _openAbout,
                     ),
@@ -238,7 +238,7 @@ class _SettingsPageState extends State<SettingsPage> {
                 const SizedBox(height: 28),
                 Center(
                   child: Text(
-                    '觅伴',
+                    '久遇',
                     style: TextStyle(fontSize: 11, color: AppColors.textMuted.withValues(alpha: 0.85), letterSpacing: 0.6),
                   ),
                 ),
