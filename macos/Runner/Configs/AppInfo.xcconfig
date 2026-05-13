@@ -1,7 +1,7 @@
 // Runner 目标的应用级配置。
 
-PRODUCT_NAME = 约局
+PRODUCT_NAME = 觅伴
 
 PRODUCT_BUNDLE_IDENTIFIER = com.yueplay.yueplayer
 
-PRODUCT_COPYRIGHT = Copyright © 2026 约局
+PRODUCT_COPYRIGHT = Copyright © 2026 觅伴

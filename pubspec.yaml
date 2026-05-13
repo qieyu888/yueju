@@ -1,8 +1,8 @@
 name: yueplayer
-description: "约局 — 场景化线下聚会与轻社交"
+description: "觅伴 — 场景化线下聚会与轻社交"
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 1.0.1+2
 
 environment:
   sdk: ^3.10.4

@@ -14,11 +14,11 @@ Future<void> main() async {
       statusBarBrightness: Brightness.light,
     ),
   );
-  runApp(const YuejuApp());
+  runApp(const MibanApp());
 }
 
-class YuejuApp extends StatelessWidget {
-  const YuejuApp({super.key});
+class MibanApp extends StatelessWidget {
+  const MibanApp({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +28,7 @@ class YuejuApp extends StatelessWidget {
       primary: AppColors.primary,
     );
     return MaterialApp(
-      title: '约局',
+      title: '觅伴',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: scheme,

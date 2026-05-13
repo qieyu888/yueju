@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yueplayer/screens/about_page.dart';
 import 'package:yueplayer/screens/settings_flows.dart';
 import 'package:yueplayer/screens/splash_page.dart';
 import 'package:yueplayer/widgets/dialog_escape.dart';
@@ -81,29 +82,8 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  void _showAbout() {
-    showAboutDialog(
-      context: context,
-      applicationName: '约局',
-      applicationVersion: '1.0.0',
-      applicationIcon: Container(
-        width: 48,
-        height: 48,
-        decoration: BoxDecoration(
-          color: AppColors.primary.withValues(alpha: 0.12),
-          borderRadius: BorderRadius.circular(12),
-        ),
-        child: const Icon(Icons.groups_rounded, color: AppColors.primary, size: 28),
-      ),
-      applicationLegalese: '© 2026',
-      children: [
-        const SizedBox(height: 8),
-        Text(
-          '场景化轻社交：发现聚会、记录动态、维护朋友联系。',
-          style: TextStyle(fontSize: 13, height: 1.5, color: AppColors.textSecondary.withValues(alpha: 0.95)),
-        ),
-      ],
-    );
+  void _openAbout() {
+    _push(const AboutPage());
   }
 
   void _push(Widget page) {
@@ -249,16 +229,16 @@ class _SettingsPageState extends State<SettingsPage> {
                     ),
                     const Divider(height: 1),
                     _tile(
-                      '关于约局',
+                      '关于觅伴',
                       trailing: _chevronTrail('1.0.0'),
-                      onTap: _showAbout,
+                      onTap: _openAbout,
                     ),
                   ],
                 ),
                 const SizedBox(height: 28),
                 Center(
                   child: Text(
-                    '约局',
+                    '觅伴',
                     style: TextStyle(fontSize: 11, color: AppColors.textMuted.withValues(alpha: 0.85), letterSpacing: 0.6),
                   ),
                 ),

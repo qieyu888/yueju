@@ -3,7 +3,7 @@
 const String kUserAgreementTitle = '用户协议';
 
 const String kUserAgreementBody = '''
-欢迎使用「约局」。在使用本应用前，请您务必审慎阅读并充分理解本协议各条款。
+欢迎使用「觅伴」。在使用本应用前，请您务必审慎阅读并充分理解本协议各条款。
 
 1. 服务说明
 本应用向您提供活动发现、动态分享、通讯录与通讯辅助等功能。具体服务以应用内实际提供为准。
@@ -24,7 +24,7 @@ const String kUserAgreementBody = '''
 const String kPrivacyPolicyTitle = '隐私政策';
 
 const String kPrivacyPolicyBody = '''
-「约局」非常重视您的个人信息与隐私保护。本政策说明我们如何收集、使用、存储与保护您的信息。
+「觅伴」非常重视您的个人信息与隐私保护。本政策说明我们如何收集、使用、存储与保护您的信息。
 
 1. 我们收集的信息
 为提供服务，我们可能处理您主动填写的昵称、通讯录与动态内容、设备与日志信息等。具体范围以实际功能为准。

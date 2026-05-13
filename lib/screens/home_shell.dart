@@ -16,7 +16,7 @@ class HomeShell extends StatefulWidget {
 }
 
 class _HomeShellState extends State<HomeShell> {
-  /// 0 约局 1 动态 2 朋友 3 我的
+  /// 0 觅伴 1 动态 2 朋友 3 我的
   int _tab = 0;
   int _activitiesReloadToken = 0;
 
@@ -100,7 +100,7 @@ class _HomeShellState extends State<HomeShell> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _navItem(0, Icons.explore_outlined, '约局'),
+              _navItem(0, Icons.explore_outlined, '觅伴'),
               _navItem(1, Icons.photo_outlined, '动态'),
               _fabSlot(),
               _navItem(3, Icons.people_outline, '朋友'),

@@ -85,7 +85,7 @@ class AppStorage {
       ),
       InboxMessage(
         id: 'seed_n5',
-        title: '约局小贴士',
+        title: '觅伴小贴士',
         body: '在「朋友」页可快速拨号或发短信，聚会结束后也能保持联系。',
         createdAtMs: now - 26 * hour,
         read: true,

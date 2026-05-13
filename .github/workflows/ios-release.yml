@@ -44,7 +44,7 @@ jobs:
       - name: Upload using iTMSTransporter
         env:
           WORKING_DIRECTORY: build/ios/ipa
-          IPA_FILE_NAME: 约局.ipa
+          IPA_FILE_NAME: 觅伴.ipa
           APPLE_USERNAME: xuexi1996@icloud.com
           APPLE_PASSWORD: resi-xhwj-mizq-spkd
           APPLE_ASC_PROVIDER: MNN4277BD4
