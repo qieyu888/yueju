@@ -16,7 +16,8 @@ void main() {
     await tester.pumpWidget(
       const MaterialApp(home: HomeShell()),
     );
-    await tester.pumpAndSettle();
+    await tester.pump();
+    await tester.pump(const Duration(milliseconds: 100));
     expect(find.text('发现聚会'), findsOneWidget);
   });
 }

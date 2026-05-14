@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:yueplayer/data/sample_data.dart';
+import 'package:yueplayer/iap/store_products.dart';
 import 'package:yueplayer/models/activity.dart';
 import 'package:yueplayer/services/app_storage.dart';
 import 'package:yueplayer/theme/app_colors.dart';
@@ -35,6 +36,15 @@ class _PublishActivityPageState extends State<PublishActivityPage> {
       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('请填写标题')));
       return;
     }
+    if (AppStorage.instance.getUserPoints() < kPublishActivityPointsCost) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('积分不足，发布聚会需要消耗 $kPublishActivityPointsCost 分（可在「我的」内购充值）'),
+        ),
+      );
+      return;
+    }
     final maxPeople = int.tryParse(_max.text.trim()) ?? 6;
     final host = AppStorage.instance.getDisplayName();
     final id = 'u_${DateTime.now().millisecondsSinceEpoch}';
@@ -55,6 +65,7 @@ class _PublishActivityPageState extends State<PublishActivityPage> {
     );
     await AppStorage.instance.prependUserActivity(act);
     await AppStorage.instance.bumpHosted();
+    await AppStorage.instance.applyPublishPointsDeduction();
     if (!mounted) return;
     Navigator.pop(context, true);
   }
@@ -62,6 +73,7 @@ class _PublishActivityPageState extends State<PublishActivityPage> {
   @override
   Widget build(BuildContext context) {
     final cats = activityFilters.where((e) => e != '全部').toList();
+    final pts = AppStorage.instance.getUserPoints();
     return Scaffold(
       backgroundColor: AppColors.scaffoldBg,
       appBar: AppBar(
@@ -70,6 +82,15 @@ class _PublishActivityPageState extends State<PublishActivityPage> {
         foregroundColor: AppColors.textPrimary,
         elevation: 0.5,
         actions: [
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.only(right: 8),
+              child: Text(
+                '$pts 分',
+                style: const TextStyle(fontWeight: FontWeight.w700, color: AppColors.primary, fontSize: 14),
+              ),
+            ),
+          ),
           TextButton(
             onPressed: _submit,
             child: const Text('发布', style: TextStyle(fontWeight: FontWeight.w800, color: AppColors.primary)),
@@ -79,6 +100,11 @@ class _PublishActivityPageState extends State<PublishActivityPage> {
       body: ListView(
         padding: const EdgeInsets.all(20),
         children: [
+          Text(
+            '发布消耗 $kPublishActivityPointsCost 分 · 当前 $pts 分',
+            style: const TextStyle(color: AppColors.textSecondary, fontSize: 13, height: 1.4),
+          ),
+          const SizedBox(height: 8),
           const Text('极简发布：标题、类型、时间、地点、人数与配图链接（可选）。', style: TextStyle(color: AppColors.textSecondary, height: 1.4)),
           const SizedBox(height: 20),
           TextField(

@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:yueplayer/data/sample_data.dart';
+import 'package:yueplayer/iap/store_products.dart';
 import 'package:yueplayer/models/activity.dart';
 import 'package:yueplayer/models/contact.dart';
 import 'package:yueplayer/models/inbox_message.dart';
@@ -32,6 +33,8 @@ class AppStorage {
   static const _kNotifyMomentReplies = 'notify_moment_replies_v1';
   static const _kNotifyActivityTips = 'notify_activity_tips_v1';
   static const _kInboxMessages = 'inbox_messages_v1';
+  static const _kUserPoints = 'user_points_v1';
+  static const _kIapFulfilledIds = 'iap_fulfilled_transaction_ids_v1';
 
   SharedPreferences? _prefs;
 
@@ -39,11 +42,58 @@ class AppStorage {
     _prefs = await SharedPreferences.getInstance();
     await _bootstrapAddressBookIfNeeded();
     await _bootstrapInboxIfNeeded();
+    await _bootstrapUserPointsIfNeeded();
   }
 
   Future<void> _bootstrapInboxIfNeeded() async {
     if (_p.containsKey(_kInboxMessages)) return;
     await _persistInbox(_buildSeedInbox());
+  }
+
+  Future<void> _bootstrapUserPointsIfNeeded() async {
+    if (!_p.containsKey(_kUserPoints)) {
+      await _p.setInt(_kUserPoints, kDefaultUserPoints);
+    }
+  }
+
+  int getUserPoints() => _p.getInt(_kUserPoints) ?? kDefaultUserPoints;
+
+  Future<void> addUserPoints(int delta) async {
+    if (delta == 0) return;
+    final next = getUserPoints() + delta;
+    await _p.setInt(_kUserPoints, next < 0 ? 0 : next);
+  }
+
+  /// 发布成功后扣减积分（调用前需已校验余额 ≥ [kPublishActivityPointsCost]）。
+  Future<void> applyPublishPointsDeduction() async {
+    final cur = getUserPoints();
+    final next = (cur - kPublishActivityPointsCost).clamp(0, 1 << 30);
+    await _p.setInt(_kUserPoints, next);
+  }
+
+  /// 内购发货去重：同一交易 ID 只发放一次积分；无可用 ID 时返回 true（无法去重）。
+  Future<bool> claimIapGrantIfNew(String? transactionKey) async {
+    if (transactionKey == null || transactionKey.isEmpty) {
+      return true;
+    }
+    final raw = _p.getString(_kIapFulfilledIds);
+    final ids = <String>[];
+    if (raw != null && raw.isNotEmpty) {
+      try {
+        for (final e in jsonDecode(raw) as List<dynamic>) {
+          ids.add(e as String);
+        }
+      } catch (_) {}
+    }
+    if (ids.contains(transactionKey)) {
+      return false;
+    }
+    ids.add(transactionKey);
+    while (ids.length > 200) {
+      ids.removeAt(0);
+    }
+    await _p.setString(_kIapFulfilledIds, jsonEncode(ids));
+    return true;
   }
 
   List<InboxMessage> _buildSeedInbox() {
@@ -361,6 +411,7 @@ class AppStorage {
     await _p.clear();
     await _bootstrapAddressBookIfNeeded();
     await _bootstrapInboxIfNeeded();
+    await _bootstrapUserPointsIfNeeded();
   }
 
   /// 记录用户提交的动态举报信息。
