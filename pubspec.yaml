@@ -2,7 +2,7 @@ name: yueplayer
 description: "久遇 — 场景化线下聚会与轻社交"
 publish_to: 'none'
 
-version: 1.0.2+4
+version: 1.0.2+5
 
 environment:
   sdk: ^3.10.4
